@@ -1,6 +1,6 @@
 # zbx_s7_get
 
-Simple Zabbix python3 script, to get values from Siemens S7 PLCs using [snap7 suite](http://snap7.sourceforge.net/) and [https://python-snap7.readthedocs.io/en/latest/](python-snap7).
+Simple Zabbix python3 script, to get values from Siemens S7 PLCs using [snap7 suite](http://snap7.sourceforge.net/) and [python-snap7](https://python-snap7.readthedocs.io/en/latest/).
 
 ## Install
 

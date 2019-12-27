@@ -57,7 +57,7 @@ if __name__ == "__main__":
         else:
             # return whole bits array
             offset = int(args.offset)
-            bit_indexes = range(7)
+            bit_indexes = range(8)
 
     if args.bytes_to_read:
         bytes_to_read = args.bytes_to_read

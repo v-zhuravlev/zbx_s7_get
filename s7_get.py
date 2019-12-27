@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import json
 import ipaddress
 import snap7
 
@@ -27,6 +28,7 @@ def create_parser():
                         choices=['int', 'float', 'bool', 'string'])
     # For string, you should explicitly set number of bytes to read
     parser.add_argument("bytes_to_read", type=int, nargs="?")
+    parser.add_argument("--json", action='store_true')
     return parser.parse_args()
 
 
@@ -49,7 +51,13 @@ if __name__ == "__main__":
         offset = int(args.offset)
     elif args.datatype == 'bool':
         bytes_to_read = 1
-        offset, bit_index = map(int, args.offset.split(".", 2))
+        if '.' in args.offset:
+            offset, bit_index = map(int, args.offset.split(".", 2))
+            bit_indexes = [bit_index]
+        else:
+            # return whole bits array
+            offset = int(args.offset)
+            bit_indexes = range(7)
 
     if args.bytes_to_read:
         bytes_to_read = args.bytes_to_read
@@ -65,13 +73,16 @@ if __name__ == "__main__":
     plc.disconnect()
 
     if args.datatype == 'int':
-        response = snap7.util.get_int(bytes_response, 0)
+        response = [str(snap7.util.get_int(bytes_response, 0))]
     elif args.datatype == 'float':
-        response = snap7.util.get_real(bytes_response, 0)
+        response = [str(snap7.util.get_real(bytes_response, 0))]
     elif args.datatype == 'bool':
-        response = snap7.util.get_bool(bytes_response, 0, bit_index)
+        response = [str(snap7.util.get_bool(bytes_response, 0, i)) for i in bit_indexes]
     elif args.datatype == 'string':
         pass
-    #   response = snap7.util.get_string(bytes_response, 0, bytes_to_read)
-    
-    print(response)
+    # response = [snap7.util.get_string(bytes_response, 0, bytes_to_read)]
+
+    if args.json:
+        print(json.dumps({str(offset): response}))
+    else:
+        print(" ".join(response))

@@ -41,7 +41,7 @@ $ ./s7_get.py 172.10.1.1 0 0 66 2 int
 Create new item:
 
 - **Type**: External check
-- **Key**: `s7_get.py[<s7_ip_address>,<s7_rack},<s7_slot>,<DB>,<offset>,<datatype>]`, where datatype = `int`,`bool` or `float`.
+- **Key**: `s7_get.py[<s7_ip_address>,<s7_rack>,<s7_slot>,<DB>,<offset>,<datatype>]`, where datatype = `int`,`bool` or `float`.
 
 For example:
 
